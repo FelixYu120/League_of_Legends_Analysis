@@ -45,6 +45,39 @@ Below is the head of the cleaned dataframe.
 | LOLTMNT03_183538 | Red 	 | LCK 	  | -1476.0      | -811.0 	  | -2.0         |	0 	  | -1.15    | -0.79 	 | -0.98     |
 | LOLTMNT03_183544 | Blue  | LCK 	  | 1993.0       | 1056.0 	  | 5.0          |	0     |	1.55     | 1.03 	 | 2.45      |
 
+### Univariate Analysis
+We performed univariate analysis on the golddiffat15 statistics in the dataset
+
+<iframe
+  src="assets/dist_gold.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The histogram shows that the distribution of the gold difference is very normal.
+
+We also performed univariate analysis on the xpdiffat15 statistics in the dataset
+
+<iframe
+  src="assets/dist_xp.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The histogram shows that the distribution of the XP difference is also very normal.
+
+We also performed univariate analysis on the killdiffat15 statistics in the dataset
+
+<iframe
+  src="assets/dist_kill.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The histogram shows that the distribution of the Kill difference is also very normal.
 
 ## Assessment of Missingness
 
