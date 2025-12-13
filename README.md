@@ -11,9 +11,9 @@ This dataset captures key gameplay statistics and outcomes from a collection of 
 
 In the realm of professional League of Legends (LoL), the concept of an "early game lead" holds significant weight and often dictates the trajectory of a match. While individual events like First Blood are flashy, the Gold Difference at 15 minutes serves as a comprehensive metric of a team's macro-performance. While this is not everything, because team fights and other major events have a more significant role in the victory or defeat of a team, early game lead is a solid metric to measure if a team is going to win. 
 
-The central question we are interested in is: To what extent do early game economic and experience advantages (at the 15-minute mark) predict the final outcome of a professional match? We aim to use data analysis techniques to quantify the relationship between these early-game statistics, specifically golddiffat15, xpdiffat15, and killsat15, and the ultimate match result. By leveraging these indicators, we have developed a machine learning model to predict whether a team will win or lose based solely on their status at 15 minutes. This predictive model holds potential for real-time win probability estimation, helping analysts and viewers understand when a lead becomes insurmountable.
+The central question we are interested in is: Do early-game advantages translate into match wins equally across different competitive regions, or does their impact vary by region? This question is very interesting because of the frequent debates about skill level in different regions. A common phenomenon of early game lead might be hard to overcome in one region but easier in other regions, reflecting the skill level of the teams and the overall playstyle of the region. A bystander with this information can gain further insights about how differently different regions play the game.
 
-### Introduction to Dataset
+### Introduction to the Dataset
 This dataset contains 118932 observations and 164 predictors. Since our analysis focuses on macro-level team performance, we filter these observations to isolate team-summary rows. Here is an introduction to the key columns utilized in our analysis:
 
 - gameid: A unique identifier for each individual match played. This allows us to group data and distinguish between specific games.
@@ -33,6 +33,18 @@ This dataset contains 118932 observations and 164 predictors. Since our analysis
 - league: Denotes the professional league (e.g., LCK, LPL, LCS) where the match took place, allowing us to account for regional differences in playstyle.
 
 ## Data Cleaning and Exploratory Data Analysis
+### Data Cleaning
+The dataset is structured such that each gameid corresponds to 12 rows: 10 rows representing individual players (5 per team) and 2 rows representing the team summaries. I only kept the team rows because the analysis I am doing is a team-level analysis that analyzes the team performance at 15 minutes. So, individual player information would be unnecessary. I was also only interested in the major regions: LCK, LPL, LEC, and LTA, as they are the major pro leagues that have the highest level of gameplay. So I only selected the data from these 4 major regions and did not keep the other data. I feature engineered 'killdiffat15' as that information was not available, and I simply did it by using 'killsat15' - 'opp_killsat15' and I computed all the standardized scores as well for 'golddiffat15', 'xpdiffat15', and 'killdiffat15'. This makes it so that understanding the lead is better quantified across the 3, as the gold difference can go up to 5000, while XP and kill difference might not deviate so much. To further save time, I only kept 'gameid', 'side', 'region', 'golddiffat15', 'xpdiffat15', 'killdiffat15', 'result', 'gold_std', 'xp_std', and 'kill_std' columns because those are the only columns that actually correlate to what I am trying to find. 
+
+Below is the head of the cleaned dataframe.
+| gameid 	         | side  | region |	golddiffat15 | xpdiffat15 | killdiffat15 | result |	gold_std |	xp_std |	kill_std |
+|:-----------------|:------|-------:|-------------:|-----------:|-------------:|-------:|---------:|---------|:----------|
+| LOLTMNT03_183532 | Blue  | LCK 	  | 3067.0       | 2588.0     |	4.0          |	1 	  | 2.39 	   | 2.52 	 | 1.96      |
+| LOLTMNT03_183532 | Red 	 | LCK 	  | -3067.0 	   | -2588.0 	  | -4.0         |	0 	  | -2.39 	 | -2.52 	 | -1.96     |
+| LOLTMNT03_183538 | Blue  | LCK    |	1476.0 	     | 811.0 	    | 2.0 	       |  1 	  | 1.15     | 0.79 	 | 0.98      |
+| LOLTMNT03_183538 | Red 	 | LCK 	  | -1476.0      | -811.0 	  | -2.0         |	0 	  | -1.15    | -0.79 	 | -0.98     |
+| LOLTMNT03_183544 | Blue  | LCK 	  | 1993.0       | 1056.0 	  | 5.0          |	0     |	1.55     | 1.03 	 | 2.45      |
+
 
 ## Assessment of Missingness
 
