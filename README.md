@@ -38,7 +38,7 @@ The dataset is structured such that each gameid corresponds to 12 rows: 10 rows 
 
 Below is the head of the cleaned dataframe.
 | gameid 	         | side  | region |	golddiffat15 | xpdiffat15 | killdiffat15 | result |	gold_std |	xp_std |	kill_std |
-|:-----------------|:------|-------:|-------------:|-----------:|-------------:|-------:|---------:|:--------|:----------|
+|:-----------------|:------|:-------|:-------------|:-----------|:-------------|:-------|:---------|:--------|:----------|
 | LOLTMNT03_183532 | Blue  | LCK 	  | 3067.0       | 2588.0     |	4.0          |	1 	  | 2.39 	   | 2.52 	 | 1.96      |
 | LOLTMNT03_183532 | Red 	 | LCK 	  | -3067.0 	   | -2588.0 	  | -4.0         |	0 	  | -2.39 	 | -2.52 	 | -1.96     |
 | LOLTMNT03_183538 | Blue  | LCK    |	1476.0 	     | 811.0 	    | 2.0 	       |  1 	  | 1.15     | 0.79 	 | 0.98      |
