@@ -157,12 +157,18 @@ Null Hypothesis: The ability to convert an early advantage into a win is indepen
 Alternative Hypothesis: Certain regions are significantly better (or worse) at converting early advantages into wins than others.
 Test Statistic: The Mean Absolute Deviation from the global win rate. 
 Significance Level: 5%
-Conclusion: The permutation test resulted in a p-value of 0.168. Therefore, I FAIL TO REJECT THE NULL HYPOTHESIS. I do not have sufficient evidence to claim that regions differ significantly in their ability to snowball early leads. The variations I see in the data are consistent with random fluctuations.
+Conclusion: The permutation test resulted in a p-value of 0.168. Therefore, I fail to reject the null hypothesis. I do not have sufficient evidence to claim that regions differ significantly in their ability to snowball early leads. The variations I see in the data are consistent with random fluctuations.
 Justification: Our question asks if regional playstyles influence game outcomes. Specifically, I want to know if some regions are more efficient at "snowballing" a lead than others. The null hypothesis is the standard scientific baseline: it assumes that once a team gets a lead, their probability of winning is the same regardless of whether they play. And the alternative hypothesis assumes that it is different. I chose the Mean Absolute Deviation (MAD) from the global average as our test statistic because I am comparing multiple groups simultaneously.
 
 ## Framing a Prediction Problem
+From my hypothesis test in the previous section, I confirmed that a team's gold difference at 15 minutes is a statistically significant indicator of victory. This leads to a practical prediction problem: Can I accurately predict the final match outcome (Win/Lose) knowing only the state of the game at the 15-minute mark?
+
+To address this, I will employ Binary Classification. Our response variable is the result column, where 1 represents a Win and 0 represents a Loss. And at the time of prediction (15 minutes), I would have access to the current gold standing, experience levels, and kill counts. I specifically exclude any post-15-minute statistics. For model evaluation, I will use Accuracy. This is because my target variable result is perfectly balanced (50% Wins, 50% Losses) because every match in the dataset consists of exactly one winning team and one losing team. In this case, I am not too worried about false positives or false negatives either. So accuracy is the metric I chose.
 
 ## Baseline Model
+For the baseline model, I used a Logistic Regression Classifier, with the following three features: golddiffat15, xpdiffat15, and side. Among these three features, two of them are quantitative: golddiffat15 and xpdiffat15. I utilized a StandardScaler Transformer to transform them into a standard scale. This was done because it makes the coefficients readable and interpretable. The last feature, side, is a nominal categorical variable. I utilized a OneHotEncoder to transform it into a binary format (representing Blue vs. Red side).
+
+After fitting the model, my accuracy score is 0.7258. This means that my model is able to correctly predict 72.58% of match outcomes. I believe this model is "good" for a baseline because it significantly outperforms a random guess (50%), confirming that early economic leads are strong predictors of victory. 
 
 ## Final Model
 
