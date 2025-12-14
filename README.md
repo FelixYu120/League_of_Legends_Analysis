@@ -5,16 +5,16 @@ Author: Felix Yu
 
 ## Introduction
 ### General Introduction
-League of Legends (LOL) is a popular multiplayer game developed by Riot Games. It is one of the most influential and widely played games. The esports counterpart had huge successes as well. The data set we will be working with is a professional data set that’s developed by Oracle's Elixir. The file records match data from professional LOL esports gaming matches throughout 2025, including Worlds. 
+League of Legends (LOL) is a popular multiplayer game developed by Riot Games. It is one of the most influential and widely played games. The esports counterpart had huge successes as well. The data set I will be working with is a professional data set that’s developed by Oracle's Elixir. The file records match data from professional LOL esports gaming matches throughout 2025, including Worlds. 
 
 This dataset captures key gameplay statistics and outcomes from a collection of LOL matches, offering a source of information for understanding player information, team information, and match outcomes.
 
 In the realm of professional League of Legends (LoL), the concept of an "early game lead" holds significant weight and often dictates the trajectory of a match. While individual events like First Blood are flashy, the Gold Difference at 15 minutes serves as a comprehensive metric of a team's macro-performance. While this is not everything, because team fights and other major events have a more significant role in the victory or defeat of a team, early game lead is a solid metric to measure if a team is going to win. 
 
-The central question we are interested in is: Do early-game advantages translate into match wins equally across different competitive regions, or does their impact vary by region? This question is very interesting because of the frequent debates about skill level in different regions. A common phenomenon of early game lead might be hard to overcome in one region but easier in other regions, reflecting the skill level of the teams and the overall playstyle of the region. A bystander with this information can gain further insights about how differently different regions play the game.
+The central question I am interested in is: Do early-game advantages translate into match wins equally across different competitive regions, or does their impact vary by region? This question is very interesting because of the frequent debates about skill level in different regions. A common phenomenon of early game lead might be hard to overcome in one region but easier in other regions, reflecting the skill level of the teams and the overall playstyle of the region. A bystander with this information can gain further insights about how differently different regions play the game.
 
 ### Introduction to the Dataset
-This dataset contains 118932 observations and 164 predictors. Since our analysis focuses on macro-level team performance, we filter these observations to isolate team-summary rows. Here is an introduction to the key columns utilized in our analysis:
+This dataset contains 118932 observations and 164 predictors. Since our analysis focuses on macro-level team performance, I filter these observations to isolate team-summary rows. Here is an introduction to the key columns utilized in our analysis:
 
 - gameid: A unique identifier for each individual match played. This allows us to group data and distinguish between specific games.
 
@@ -100,7 +100,7 @@ I also performed bivariate analysis for the correlation of gold difference versu
   frameborder="0"
 ></iframe>
 
-The plot showed that there is a roughly linear relationship between gold difference and xp difference. This makes sense because a gold difference and xp difference are both signals that a team is ahead, and usually when a pro team is ahead, they can capitalize on their resources and stay ahead in all resources, which includes gold and xp. We can also see that teams with more gold and XP at minute 15 have a lot higher chance of winning. Though it is not guaranteed, it proves that the two predictors are good indicators of a game's results.
+The plot showed that there is a roughly linear relationship between gold difference and xp difference. This makes sense because a gold difference and xp difference are both signals that a team is ahead, and usually when a pro team is ahead, they can capitalize on their resources and stay ahead in all resources, which includes gold and xp. I can also see that teams with more gold and XP at minute 15 have a lot higher chance of winning. Though it is not guaranteed, it proves that the two predictors are good indicators of a game's results.
 
 ### Interesting Aggregates
 Here are some interesting aggregates within the data.
@@ -121,7 +121,7 @@ I did a pivot table based on how ahead the team is and if they won the match or 
 I believe that the ban columns are NMAR because the nature of the missingness depends on the value itself. When a row is missing a ban1 or ban2 it implies that there was no ban on any champion at all. Because this was not dependent on any other values, this constitutes an NMAR. 
 
 ### Missingness Dependency
-In this part, we computed whether golddiffat15's missingness is dependent on the region. I did this because of the table above, where LPL had NaN for gold. I used a permutation test to see if the missingness in golddiffat15 was just random or it came from another distribution. I used a 0.05 significance level cutoff and used TVD for the test statistic. 
+In this part, I computed whether golddiffat15's missingness is dependent on the region. I did this because of the table above, where LPL had NaN for gold. I used a permutation test to see if the missingness in golddiffat15 was just random or it came from another distribution. I used a 0.05 significance level cutoff and used TVD for the test statistic. 
 Null Hypothesis: The distribution of league when golddiffat15 is missing is the same as the distribution of league when golddiffat15 is not missing.
 Alternative Hypothesis: The distribution of league when golddiffat15 is missing is not the same as the distribution of league when golddiffat15 is not missing.
 Below is the graph of the permutation test of golddiffat15
@@ -133,7 +133,7 @@ Below is the graph of the permutation test of golddiffat15
   frameborder="0"
 ></iframe>
 
-This shows that it is significant, we reject the null hypothesis, and that golddiffat15 is very dependent on the region. And with further data analysis, I found out that all LPL's statistics for anything related to the actual game content are missing. This might be due to a privacy issue in China, where they don't want to release their information. This proves that it is MAR, meaning that the missingness is because of another column: region. I then looked at other regions that are not lpl and found out that they had no missingness at all.
+This shows that it is significant, I reject the null hypothesis, and that golddiffat15 is very dependent on the region. And with further data analysis, I found out that all LPL's statistics for anything related to the actual game content are missing. This might be due to a privacy issue in China, where they don't want to release their information. This proves that it is MAR, meaning that the missingness is because of another column: region. I then looked at other regions that are not lpl and found out that they had no missingness at all.
 
 I then proceeded to a non-important predictor: damagetotower. This is not important to my analysis because I only care about early game statistics, and this is very unrelated. I used a 0.05 significance level and used the TVD again for the test statistic.
 Null Hypothesis: The distribution of league when damagetotower is missing is the same as the distribution of league when damagetotower is not missing.
@@ -147,9 +147,18 @@ Below is the graph
   frameborder="0"
 ></iframe>
 
-Similarly, it showcased that it is very significant, and we reject the null hypothesis. In a similar fashion to the other missingness analysis, it is only the Chinese LPL that did not have any data. All other regions had no missing data in this as well. 
+Similarly, it showcased that it is very significant, and I reject the null hypothesis. In a similar fashion to the other missingness analysis, it is only the Chinese LPL that did not have any data. All other regions had no missing data in this as well. 
+
+As a result of these analyses, I decided to drop all LPL data because it didn't have any of the crucial data that I needed to compute the analysis. 
 
 ## Hypothesis Testing
+In this hypothesis test, I aim to assess whether there is a significant difference in how effectively teams from different regions (leagues) convert an early game lead into a victory. Specifically, I examine the distribution of win rates across regions, conditioned on the team having a positive "Advantage Score" (a composite of Gold, XP, and Kill differences) at 15 minutes.  
+Null Hypothesis: The ability to convert an early advantage into a win is independent of the region. The variance in win rates across regions for advantaged teams is due to random chance.
+Alternative Hypothesis: Certain regions are significantly better (or worse) at converting early advantages into wins than others.
+Test Statistic: The Mean Absolute Deviation from the global win rate. 
+Significance Level: 5%
+Conclusion: The permutation test resulted in a p-value of 0.168. Therefore, I FAIL TO REJECT THE NULL HYPOTHESIS. I do not have sufficient evidence to claim that regions differ significantly in their ability to snowball early leads. The variations I see in the data are consistent with random fluctuations.
+Justification: Our question asks if regional playstyles influence game outcomes. Specifically, I want to know if some regions are more efficient at "snowballing" a lead than others. The null hypothesis is the standard scientific baseline: it assumes that once a team gets a lead, their probability of winning is the same regardless of whether they play. And the alternative hypothesis assumes that it is different. I chose the Mean Absolute Deviation (MAD) from the global average as our test statistic because I am comparing multiple groups simultaneously.
 
 ## Framing a Prediction Problem
 
