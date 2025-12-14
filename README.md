@@ -182,3 +182,11 @@ In terms of tuning hyperparameters, I chose four key parameters for the Random F
 The accuracy score of my Final Model is 0.7008 (70.08%). Comparing this to my baseline accuracy of 0.7258, the performance is slightly lower. While I initially expected the complex model and engineered features to capture deeper nuances of the game state, this result suggests that the prediction task is not that complicated. It is instead dominated by the simple golddiffat15 because gold is the most important metric in the game. The Random Forest, with all the new predictors, provided more variance and noise rather than signal. This means that the raw economic difference is the greatest predictor of victory, meaning that my final model was actually worse than the baseline. 
 
 ## Fairness Analysis
+In this section, I am going to assess if my model is fair among different groups. The question I am trying to answer here is: “does my model perform worse for teams playing on the Blue Side than it does for teams playing on the Red Side?” To answer this question, I performed a permutation test and examined the result of the absolute difference in accuracy between the two groups.
+
+Group X represents the teams playing on the Blue Side, and Group Y represents the teams playing on the Red Side. My evaluation metric is accuracy, and the significance level is 0.05.
+Null Hypothesis: My model is fair. Its accuracy for teams on the Blue Side is the same as the accuracy for teams on the Red Side.
+Alternative Hypothesis: My model is unfair. Its accuracy for teams on the Blue Side is NOT the same as the accuracy for teams on the Red Side.
+Test Statistic: Absolute difference in accuracy between teams on the Blue Side and Red Side.
+
+After performing the permutation test, the resulting p-value is 0.19, which is larger than the 0.05 significance level. So, I fail to reject the null hypothesis. This outcome implies that my model predicts match outcomes for both sides with statistically similar accuracy levels. Therefore, my model is fair.
