@@ -37,7 +37,7 @@ This dataset contains 118932 observations and 164 predictors. Since our analysis
 The dataset is structured such that each gameid corresponds to 12 rows: 10 rows representing individual players (5 per team) and 2 rows representing the team summaries. I only kept the team rows because the analysis I am doing is a team-level analysis that analyzes the team performance at 15 minutes. So, individual player information would be unnecessary. I was also only interested in the major regions: LCK, LPL, LEC, and LTA, as they are the major pro leagues that have the highest level of gameplay. So I only selected the data from these 4 major regions and did not keep the other data. I feature engineered 'killdiffat15' as that information was not available, and I simply did it by using 'killsat15' - 'opp_killsat15' and I computed all the standardized scores as well for 'golddiffat15', 'xpdiffat15', and 'killdiffat15'. This makes it so that understanding the lead is better quantified across the 3, as the gold difference can go up to 5000, while XP and kill difference might not deviate so much. To further save time, I only kept 'gameid', 'side', 'region', 'golddiffat15', 'xpdiffat15', 'killdiffat15', 'result', 'gold_std', 'xp_std', and 'kill_std' columns because those are the only columns that actually correlate to what I am trying to find. 
 
 Below is the head of the cleaned dataframe.
-| gameid 	         | side  | region |	golddiffat15 | xpdiffat15 | killdiffat15 | result |	gold_std |	xp_std |	kill_std |
+| gameid 	         | side  | region |	golddiffat15 | xpdiffat15 | killdiffat15 | result |	gold_std | xp_std  | kill_std  |
 |:-----------------|:------|:-------|:-------------|:-----------|:-------------|:-------|:---------|:--------|:----------|
 | LOLTMNT03_183532 | Blue  | LCK 	  | 3067.0       | 2588.0     |	4.0          |	1 	  | 2.39 	   | 2.52 	 | 1.96      |
 | LOLTMNT03_183532 | Red 	 | LCK 	  | -3067.0 	   | -2588.0 	  | -4.0         |	0 	  | -2.39 	 | -2.52 	 | -1.96     |
@@ -54,7 +54,6 @@ I performed univariate analysis on the golddiffat15 statistics in the dataset
   height="600"
   frameborder="0"
 ></iframe>
-
 The histogram shows that the distribution of the gold difference is very normal.
 
 I also performed univariate analysis on the xpdiffat15 statistics in the dataset
@@ -65,7 +64,6 @@ I also performed univariate analysis on the xpdiffat15 statistics in the dataset
   height="600"
   frameborder="0"
 ></iframe>
-
 The histogram shows that the distribution of the XP difference is also very normal.
 
 I also performed univariate analysis on the killdiffat15 statistics in the dataset
@@ -76,7 +74,6 @@ I also performed univariate analysis on the killdiffat15 statistics in the datas
   height="600"
   frameborder="0"
 ></iframe>
-
 The histogram shows that the distribution of the Kill difference is also very normal.
 
 ### Bivariate Analysis
@@ -88,7 +85,6 @@ I performed bivariate analysis on the result versus the gold difference.
   height="600"
   frameborder="0"
 ></iframe>
-
 The box plot showed that the average winning match had a higher gold difference at minute 15 than a lost match. This indicates how the early game economy is very important for winning a game. 
 
 I also performed bivariate analysis for the correlation of gold difference versus xp difference at 15 minutes, and which games were won and which games were lost. 
@@ -99,7 +95,6 @@ I also performed bivariate analysis for the correlation of gold difference versu
   height="600"
   frameborder="0"
 ></iframe>
-
 The plot showed that there is a roughly linear relationship between gold difference and xp difference. This makes sense because a gold difference and xp difference are both signals that a team is ahead, and usually when a pro team is ahead, they can capitalize on their resources and stay ahead in all resources, which includes gold and xp. I can also see that teams with more gold and XP at minute 15 have a lot higher chance of winning. Though it is not guaranteed, it proves that the two predictors are good indicators of a game's results.
 
 ### Interesting Aggregates
